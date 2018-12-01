@@ -54,7 +54,9 @@ The `examine_data.py` script iterates through the unified data and outputs the n
 
 ## Models
 
-A very simple model is created to effectively perform a linear regression. 
+A very simple model is created to effectively perform a linear regression.
+
+In the demo, we start with a very simple model, see how it performs on a small amount of data, and improve the model. The steps shown in the demo are tagged with demo-x.
 
 ## Authors
 
