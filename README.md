@@ -52,6 +52,10 @@ You should update the `data_location` variable at the top of the script to point
 
 The `examine_data.py` script iterates through the unified data and outputs the number of records for each feature/column. This helps us identify which fields are most often present or missing. 
 
+## Models
+
+A very simple model is created to effectively perform a linear regression. 
+
 ## Authors
 
 * Rachel Hartviksen
