@@ -62,12 +62,12 @@ validation_data = get_data(2016,6)
 # Create models
 models = []
 
-sgd = tf.keras.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=False)
+sgd = tf.keras.optimizers.SGD(lr=0.001, momentum=0.0, decay=0.0, nesterov=False)
 
 # Model 1
 model1 = tf.keras.Sequential()
 model1.add(layers.BatchNormalization())
-model1.add(layers.Dense(10, activation='hard_sigmoid', kernel_initializer='random_uniform'))
+model1.add(layers.Dense(30, activation='hard_sigmoid', kernel_initializer='random_uniform'))
 model1.add(layers.Dense(1))
 model1.compile(loss='mean_squared_error', optimizer=sgd)
 models.append(model1)
@@ -75,7 +75,7 @@ models.append(model1)
 for model in models:
   print '********************************** Model evaluation **********************************'
   # more epochs
-  model.fit(training_data.x, training_data.y, epochs=10, batch_size=10, verbose=1,validation_data=(validation_data.x, validation_data.y))
+  model.fit(training_data.x, training_data.y, epochs=200, batch_size=10, verbose=1,validation_data=(validation_data.x, validation_data.y))
   print len(model.layers)
 
   for layer in model.layers:
