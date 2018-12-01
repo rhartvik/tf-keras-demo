@@ -24,7 +24,7 @@ def get_data(year,month):
   file = open('weather_data/OttawaGatineau_hourly_{0:04d}{1:02d}.csv'.format(year,month),'r')
   data = pd.read_csv(file, delimiter=',',quotechar='"',quoting=1)
   filtered_frame = data[["Year","Month","Day","Time","Temp (C)","Dew Point Temp (C)","Rel Hum (%)","Wind Dir (10s deg)","Wind Spd (km/h)","Visibility (km)","Stn Press (kPa)"]]
-  filtered_frame['Time'] = filtered_frame['Time'].map(lambda time: int(time[:-3]))
+  filtered_frame['Time'] = filtered_frame['Time'].map(lambda time: int(time[:-3])) #convert time to hour as int
   x = filtered_frame.values
 
   temperature = data[["Temp (C)","Hmdx","Wind Chill"]]
