@@ -1,6 +1,8 @@
 # tf-keras-demo
 A simple neural network example using TensorFlow Keras.
 
+## Getting started
+
 ### Prerequisites
 
 This project was compiled with Python 2.7.13 ([downloadable from python.org](https://www.python.org/downloads/release/python-2713/))
