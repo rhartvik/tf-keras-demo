@@ -62,7 +62,8 @@ validation_data = get_data(2016,6)
 # Create models
 models = []
 
-sgd = tf.keras.optimizers.SGD(lr=0.001, momentum=0.0, decay=0.0, nesterov=False)
+# Reduce the learning rate
+sgd = tf.keras.optimizers.SGD(lr=0.001, momentum=0.0, decay=0.0001, nesterov=False)
 
 # Model 1
 model1 = tf.keras.Sequential()
