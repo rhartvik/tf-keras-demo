@@ -50,6 +50,10 @@ The data comes with several lines of meta data at the top of each file like the 
 
 You should update the `data_location` variable at the top of the script to point to the location where you downloaded the files from the historical data portal.
 
+## Data investigation
+
+The `examine_data.py` script iterates through the unified data and outputs the number of records for each feature/column. This helps us identify which fields are most often present or missing. 
+
 ## Authors
 
 * Rachel Hartviksen
