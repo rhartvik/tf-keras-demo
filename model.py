@@ -59,23 +59,35 @@ test_data = get_data(2017,6)
 validation_data = get_data(2016,6)
 
 
-# Create model
-model = tf.keras.Sequential()
-  # Hidden layer
-model.add(layers.BatchNormalization())
-model.add(layers.Dense(10, activation='hard_sigmoid', kernel_initializer='normal'))
-  # Add an output layer:
-model.add(layers.Dense(1))
+# Create models
+models = []
 
 sgd = tf.keras.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=False)
-model.compile(loss='mean_squared_error', optimizer=sgd)
 
-model.fit(training_data.x, training_data.y, epochs=10, batch_size=10, verbose=1,validation_data=(validation_data.x, validation_data.y))
+# Model 1
+model1 = tf.keras.Sequential()
+model1.add(layers.BatchNormalization())
+model1.add(layers.Dense(10, activation='hard_sigmoid', kernel_initializer='random_uniform'))
+model1.add(layers.Dense(1))
+model1.compile(loss='mean_squared_error', optimizer=sgd)
+models.append(model1)
 
-predictions = model.predict(test_data.x)
+for model in models:
+  print '********************************** Model evaluation **********************************'
+  # more epochs
+  model.fit(training_data.x, training_data.y, epochs=10, batch_size=10, verbose=1,validation_data=(validation_data.x, validation_data.y))
+  print len(model.layers)
 
-print('Examples:')
-for i in range(0,10):
-  index = i * 20
-  #print('Example ', i, test_data.x[index])
-  print('Prediction', index, predictions[index][0], ' actual ', test_data.y[index])
+  for layer in model.layers:
+    print ('weights', layer.get_weights()[0])
+    print ('biases', layer.get_weights()[1])
+  predictions = model.predict(test_data.x)
+
+  print('Examples:')
+  for i in range(0,10):
+    index = i * 10
+    #print('Example ',i, test_data.x[index])
+    print('Prediction', index, predictions[index][0], ' actual ', test_data.y[index])
+
+  score = model.evaluate(test_data.x,test_data.y, verbose=1) #bah
+  print('Test loss:', score)
