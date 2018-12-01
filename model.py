@@ -62,42 +62,26 @@ validation_data = get_data(2016,6)
 # Create models
 models = []
 
-sgd1 = tf.keras.optimizers.SGD(lr=0.001, momentum=0.0, decay=0.0001, nesterov=False)
-sgd2 = tf.keras.optimizers.SGD(lr=0.001, momentum=0.9, decay=0.0001, nesterov=False)
-sgd3 = tf.keras.optimizers.SGD(lr=0.001, momentum=0.1, decay=0.0001, nesterov=False)
+# Reduce the learning rate
+sgd = tf.keras.optimizers.SGD(lr=0.001, momentum=0.0, decay=0.0001, nesterov=False)
 
 # Model 1
 model1 = tf.keras.Sequential()
 model1.add(layers.BatchNormalization())
 model1.add(layers.Dense(30, activation='hard_sigmoid', kernel_initializer='random_uniform'))
 model1.add(layers.Dense(1))
-model1.compile(loss='mean_squared_error', optimizer=sgd1)
+model1.compile(loss='mean_squared_error', optimizer=sgd)
 models.append(model1)
-
-# Model 2
-model2 = tf.keras.Sequential()
-model2.add(layers.BatchNormalization())
-model2.add(layers.Dense(30, activation='hard_sigmoid', kernel_initializer='random_uniform'))
-model2.add(layers.Dense(1))
-model2.compile(loss='mean_squared_error', optimizer=sgd2)
-models.append(model2)
-
-# Model 3
-model3 = tf.keras.Sequential()
-model3.add(layers.BatchNormalization())
-model3.add(layers.Dense(30, activation='hard_sigmoid', kernel_initializer='random_uniform'))
-model3.add(layers.Dense(1))
-model3.compile(loss='mean_squared_error', optimizer=sgd3)
-models.append(model3)
 
 for model in models:
   print '********************************** Model evaluation **********************************'
+  # more epochs
   model.fit(training_data.x, training_data.y, epochs=200, batch_size=10, verbose=1,validation_data=(validation_data.x, validation_data.y))
   print len(model.layers)
 
-  # for layer in model.layers:
-  #   print ('weights', layer.get_weights()[0])
-  #   print ('biases', layer.get_weights()[1])
+  for layer in model.layers:
+    print ('weights', layer.get_weights()[0])
+    print ('biases', layer.get_weights()[1])
   predictions = model.predict(test_data.x)
 
   print('Examples:')
