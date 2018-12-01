@@ -29,10 +29,6 @@ def get_data(year,month):
 
   temperature = data[["Temp (C)","Hmdx","Wind Chill"]]
   y = temperature.apply(lambda row: row["Hmdx"] if not_empty(row["Hmdx"]) else row["Wind Chill"] if not_empty(row["Wind Chill"]) else row["Temp (C)"], axis=1).values
-  output_file = open('y.txt',"w")
-  for label in y:
-    output_file.write('%s\n' % label)
-  output_file.close()
   return DataSet(x,y)
 
 # Get training, test, validation data
