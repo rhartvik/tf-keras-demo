@@ -23,9 +23,7 @@ Specifically, the following command was used to download the 2012-2018 weather d
 for year in `seq 2012 2018`;do for month in `seq 1 12`;do wget --content-disposition "http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=50719&Year=${year}&Month=${month}&Day=14&timeframe=1&submit= Download+Data" ;done;done
 ```
 
-### Process
-
-## Data cleaning
+### Data cleaning
 
 The data comes with several lines of meta data at the top of each file like the sample below.
 
@@ -50,7 +48,7 @@ The data comes with several lines of meta data at the top of each file like the 
 
 You should update the `data_location` variable at the top of the script to point to the location where you downloaded the files from the historical data portal.
 
-## Data investigation
+### Data investigation
 
 The `examine_data.py` script iterates through the unified data and outputs the number of records for each feature/column. This helps us identify which fields are most often present or missing. 
 
