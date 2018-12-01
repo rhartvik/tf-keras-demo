@@ -21,6 +21,33 @@ Specifically, the following command was used to download the 2012-2018 weather d
 for year in `seq 2012 2018`;do for month in `seq 1 12`;do wget --content-disposition "http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=50719&Year=${year}&Month=${month}&Day=14&timeframe=1&submit= Download+Data" ;done;done
 ```
 
+### Process
+
+## Data cleaning
+
+The data comes with several lines of meta data at the top of each file like the sample below.
+
+```
+"Station Name","OTTAWA GATINEAU A"
+"Province","QUEBEC"
+"Latitude","45.52"
+"Longitude","-75.56"
+"Elevation","64.30"
+"Climate Identifier","7032682"
+"WMO Identifier",""
+"TC Identifier","YND"
+"All times are specified in Local Standard Time (LST). Add 1 hour to adjust for Daylight Saving Time where and when it is observed."
+
+"Legend"
+"E","Estimated"
+"M","Missing"
+"NA","Not Available"
+```
+
+`unify_data.py` iterates through all the files and integrates this data into the CSV format with all the other data. The script also removes lines with no weather data (many instances include only the date and time).
+
+You should update the `data_location` variable at the top of the script to point to the location where you downloaded the files from the historical data portal.
+
 ## Authors
 
 * Rachel Hartviksen
