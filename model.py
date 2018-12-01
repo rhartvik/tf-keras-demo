@@ -31,8 +31,30 @@ def get_data(year,month):
   y = temperature.apply(lambda row: row["Hmdx"] if not_empty(row["Hmdx"]) else row["Wind Chill"] if not_empty(row["Wind Chill"]) else row["Temp (C)"], axis=1).values
   return DataSet(x,y)
 
+
+def get_all_data(start_year, start_month, end_year, end_month):
+  year = start_year
+  month = start_month
+  monthly_data = get_data(year, month)
+  x = monthly_data.x
+  y = monthly_data.y
+  month += 1
+  if (month == 13):
+    month = 1
+    year += 1
+  while (year <= end_year and month <= end_month):
+    monthly_data = get_data(year, month)
+    x = np.append(x,monthly_data.x, axis=0)
+    y = np.append(y,monthly_data.y, axis=0)
+    month += 1
+    if (month == 13):
+      month = 1
+      year += 1
+  return DataSet(x,y)
+
 # Get training, test, validation data
 training_data = get_data(2018,6)
+training_data_large = get_all_data(2016,4,2018,6)
 test_data = get_data(2017,6)
 validation_data = get_data(2016,6)
 
