@@ -23,24 +23,16 @@ DataSet = collections.namedtuple('DataSet', ['x', 'y'])
 def get_data(year,month):
   file = open('weather_data/OttawaGatineau_hourly_{0:04d}{1:02d}.csv'.format(year,month),'r')
   data = pd.read_csv(file, delimiter=',',quotechar='"',quoting=1)
-  #complete_frame = data[["Station Name","Province","Latitude","Longitude","Elevation","Climate Identifier","Date/Time","Year","Month","Day","Time","Temp(C)","Dew Point Temp (C)","Rel Hum (%)","Wind Dir (10s deg)","Wind Spd (km/h)","Visibility (km)","Stn Press (kPa)","Weather",]]
   filtered_frame = data[["Year","Month","Day","Time","Temp (C)","Dew Point Temp (C)","Rel Hum (%)","Wind Dir (10s deg)","Wind Spd (km/h)","Visibility (km)","Stn Press (kPa)"]]
   filtered_frame['Time'] = filtered_frame['Time'].map(lambda time: int(time[:-3]))
   x = filtered_frame.values
-  # output_file = open('x.txt',"w")
-  # for row in x:
-  #   output_file.write('%s\n' % row)
-  # output_file.close()
 
   temperature = data[["Temp (C)","Hmdx","Wind Chill"]]
   y = temperature.apply(lambda row: row["Hmdx"] if not_empty(row["Hmdx"]) else row["Wind Chill"] if not_empty(row["Wind Chill"]) else row["Temp (C)"], axis=1).values
-  #print y
   output_file = open('y.txt',"w")
   for label in y:
     output_file.write('%s\n' % label)
   output_file.close()
-  print ("x shape", x.shape)
-  print ("y shape", y.shape)
   return DataSet(x,y)
 
 # Get training, test, validation data
